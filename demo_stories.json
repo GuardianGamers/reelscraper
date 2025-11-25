@@ -1275,57 +1275,6 @@
     "game_end": "2025-11-19T17:08:31.960Z"
   },
   {
-    "demo_id": "demostory087",
-    "original_story_id": "prod_G_45831fea-23d9-4bba-8638-df82680f97cc_2025-11-24T06_13_01_216Z",
-    "video_file": "demostory087.mp4",
-    "thumbnail_file": "demostory087.jpg",
-    "gamer": "G#45831fea-23d9-4bba-8638-df82680f97cc",
-    "stage": "prod",
-    "timestamp": "2025-11-24T06:13:01.216Z",
-    "description": "",
-    "group": "",
-    "participants": [
-      "G#45831fea-23d9-4bba-8638-df82680f97cc"
-    ],
-    "gameserver": "",
-    "game_start": "2025-11-24T06:13:01.216Z",
-    "game_end": "2025-11-24T06:23:01.216Z"
-  },
-  {
-    "demo_id": "demostory088",
-    "original_story_id": "prod_G_45831fea-23d9-4bba-8638-df82680f97cc_2025-11-24T06_14_26_126Z",
-    "video_file": "demostory088.mp4",
-    "thumbnail_file": "demostory088.jpg",
-    "gamer": "G#45831fea-23d9-4bba-8638-df82680f97cc",
-    "stage": "prod",
-    "timestamp": "2025-11-24T06:14:26.126Z",
-    "description": "",
-    "group": "",
-    "participants": [
-      "G#45831fea-23d9-4bba-8638-df82680f97cc"
-    ],
-    "gameserver": "",
-    "game_start": "2025-11-24T06:14:26.126Z",
-    "game_end": "2025-11-24T06:24:26.126Z"
-  },
-  {
-    "demo_id": "demostory089",
-    "original_story_id": "prod_G_45831fea-23d9-4bba-8638-df82680f97cc_2025-11-24T06_24_26_160Z",
-    "video_file": "demostory089.mp4",
-    "thumbnail_file": "demostory089.jpg",
-    "gamer": "G#45831fea-23d9-4bba-8638-df82680f97cc",
-    "stage": "prod",
-    "timestamp": "2025-11-24T06:24:26.160Z",
-    "description": "",
-    "group": "",
-    "participants": [
-      "G#45831fea-23d9-4bba-8638-df82680f97cc"
-    ],
-    "gameserver": "",
-    "game_start": "2025-11-24T06:24:26.160Z",
-    "game_end": "2025-11-24T06:34:26.160Z"
-  },
-  {
     "demo_id": "demostory090",
     "original_story_id": "prod_G_45831fea-23d9-4bba-8638-df82680f97cc_2025-11-24T06_14_55_517Z",
     "video_file": "demostory090.mp4",
