@@ -184,7 +184,7 @@ def format_story_for_demo(story, demo_id):
 
 
 def download_story_assets(story, demo_id, demo_dir='demo-assets'):
-    """Download thumbnail for a story (skip videos)"""
+    """Download video and thumbnail for a VideoStory"""
     print(f"\n📥 Downloading assets for {demo_id}...")
     
     # Load resources
@@ -199,7 +199,25 @@ def download_story_assets(story, demo_id, demo_dir='demo-assets'):
     session = boto3.Session(profile_name='prod')
     s3 = session.client('s3', region_name=region)
     
-    # Download thumbnail only
+    success = True
+    
+    # Download video
+    video_key = story.get('_video_url', story.get('video_url', ''))
+    video_local = os.path.join(demo_dir, f"{demo_id}.mp4")
+    
+    if video_key:
+        try:
+            print(f"   📹 Downloading video from s3://{bucket}/{video_key}")
+            s3.download_file(bucket, video_key, video_local)
+            print(f"   ✅ Video saved: {demo_id}.mp4")
+        except Exception as e:
+            print(f"   ❌ Failed to download video: {e}")
+            success = False
+    else:
+        print(f"   ⚠️  No video URL found")
+        success = False
+    
+    # Download thumbnail
     thumbnail_key = story.get('_thumbnail_url', story.get('thumbnail_url', ''))
     thumbnail_local = os.path.join(demo_dir, f"{demo_id}.jpg")
     
@@ -208,13 +226,36 @@ def download_story_assets(story, demo_id, demo_dir='demo-assets'):
             print(f"   🖼️  Downloading thumbnail from s3://{bucket}/{thumbnail_key}")
             s3.download_file(bucket, thumbnail_key, thumbnail_local)
             print(f"   ✅ Thumbnail saved: {demo_id}.jpg")
-            return True
         except Exception as e:
             print(f"   ❌ Failed to download thumbnail: {e}")
-            return False
+            success = False
     else:
         print(f"   ⚠️  No thumbnail URL found")
-        return False
+        # Generate thumbnail from video if available
+        if os.path.exists(video_local):
+            print(f"   🔧 Generating thumbnail from video...")
+            try:
+                cmd = [
+                    'ffmpeg',
+                    '-i', video_local,
+                    '-vframes', '1',
+                    '-vf', 'scale=600:400:force_original_aspect_ratio=increase,crop=600:400',
+                    '-q:v', '2',
+                    '-f', 'image2',
+                    '-y',
+                    thumbnail_local
+                ]
+                result = subprocess.run(cmd, capture_output=True, text=True)
+                if result.returncode == 0:
+                    print(f"   ✅ Thumbnail generated: {demo_id}.jpg")
+                else:
+                    print(f"   ❌ Failed to generate thumbnail")
+                    success = False
+            except Exception as e:
+                print(f"   ❌ Error generating thumbnail: {e}")
+                success = False
+    
+    return success
 
 
 def main():
