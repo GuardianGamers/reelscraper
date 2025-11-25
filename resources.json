@@ -1,0 +1,47 @@
+{
+  "stages": {
+    "dev": {
+      "name": "dev",
+      "description": "Current development stage",
+      "region": "us-east-1",
+      "dynamodb_table": "GGEventsTable-147552928523-dev",
+      "s3_bucket": "ggbucket-sam-147552928523-dev"
+    },
+    "test": {
+      "name": "test",
+      "description": "Current test stage",
+      "region": "us-east-1",
+      "dynamodb_table": "GGEventsTable-147552928523-test",
+      "s3_bucket": "ggbucket-sam-147552928523-test"
+    },
+    "dev-old": {
+      "name": "dev-old",
+      "description": "Old development stage (us-west-2)",
+      "region": "us-west-2",
+      "dynamodb_table": "GGEventsTable-147552928523-dev",
+      "s3_bucket": "ggbucket-147552928523-dev"
+    },
+    "test-old": {
+      "name": "test-old",
+      "description": "Old test stage (us-west-2)",
+      "region": "us-west-2",
+      "dynamodb_table": "GGEventsTable-147552928523-test",
+      "s3_bucket": "ggbucket-147552928523-test"
+    },
+    "prod-old": {
+      "name": "prod-old",
+      "description": "Old production stage (us-west-2)",
+      "region": "us-west-2",
+      "dynamodb_table": "GGEventsTable-147552928523-prod",
+      "s3_bucket": "ggbucket-147552928523-prod"
+    },
+    "prod": {
+      "name": "prod",
+      "description": "Current production stage",
+      "region": "us-east-1",
+      "dynamodb_table": "GGEventsTable-147552928523-prod",
+      "s3_bucket": "ggbucket-sam-147552928523-prod"
+    }
+  }
+}
+

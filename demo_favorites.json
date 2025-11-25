@@ -1,0 +1,298 @@
+{
+    "exported": "2025-11-20T20:25:39.290Z",
+    "count": 47,
+    "favorites": [
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-05-13T22_57_33_686Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.288Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-03-23T04_26_58_687Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-12T21_02_18_127Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-11-16T19_13_08_750Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "dev_G_3504d3e7-8836-481b-a062-1d5c4e7a29a7_2025-09-14T04_30_51_168Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-10-23T20_18_18_729Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-11-19T17_07_55_185Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-11-16T00_42_49_096Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-13T18_24_35_004Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.289Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-09-24T01_16_55_081Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-09-24T20_50_52_593Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-09-29T17_37_43_750Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-02T18_22_33_918Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-02T18_24_32_918Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-02T18_33_05_932Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-09T16_05_43_770Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-09T16_10_33_770Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-09T17_09_39_298Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-09T17_10_39_298Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "dev_G_3e1e2c0c-8c2d-4569-9bdf-4ec7b20a9e65_2025-10-15T04_30_59_077Z",
+        "stage": "dev",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_f8a2b384-b2c3-471e-ba49-b876a60d531a_2025-10-08T20_23_12_202Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-10-23T20_13_48_729Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-10-24T00_06_51_080Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-11-16T19_07_10_276Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_abb5c892-f997-4b95-9e5d-d5bc501d863d_2025-11-16T19_10_23_750Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-10-31T18_19_29_002Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-10-31T19_50_19_066Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-12T21_04_48_127Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-12T21_01_51_127Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-12T21_09_44_863Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-12T21_58_47_033Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-12T21_59_47_033Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-13T17_34_40_519Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-13T17_36_16_519Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-13T17_51_28_519Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-13T20_50_13_522Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-13T20_51_13_522Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "test_G_800eb0ac-4fa5-436b-83ba-8f6c4b258f44_2025-11-13T21_23_55_482Z",
+        "stage": "test",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-04-18T02_30_07_131Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-04-18T02_43_12_131Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-04-22T19_34_13_944Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-04-22T19_36_27_982Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-05-13T23_18_23_686Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-05-14T20_07_15_801Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-05-14T20_07_47_801Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-05-14T20_15_56_801Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      },
+      {
+        "id": "prod-old_G_5119dbbb-b7e9-495a-be4d-46ac2e5572b7_2025-05-14T20_09_52_801Z",
+        "stage": "prod-old",
+        "availability": "available",
+        "timestamp": "2025-11-20T20:25:39.290Z"
+      }
+    ]
+  }
+
+  
+  
+  
+  
+  
+  
+  
+  
+  

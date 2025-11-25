@@ -1,0 +1,52 @@
+# Demo assets (videos and thumbnails)
+demo-assets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log
+.cache/
+
+# Sensitive data
+*.pem
+*.key
+.env
+.env.local
+
+# Large data files that can be regenerated
+all_video_stories.json
+all_video_stories_presigned.json
+stories_to_add.json
+
