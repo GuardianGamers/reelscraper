@@ -39,8 +39,8 @@
       "name": "prod",
       "description": "Current production stage",
       "region": "us-east-1",
-      "dynamodb_table": "GGEventsTable-147552928523-prod",
-      "s3_bucket": "ggbucket-sam-147552928523-prod"
+      "dynamodb_table": "GGEventsTable-926937515244-prod",
+      "s3_bucket": "ggbucket-sam-926937515244-prod"
     }
   }
 }

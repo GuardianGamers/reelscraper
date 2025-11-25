@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
 """
-Add production session reels for a specific gamer from yesterday
+Add production session reels for a specific gamer from today (UTC)
 """
 import json
 import os
 import subprocess
 import boto3
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 from pathlib import Path
 
 
 def get_production_stories(gamer_id, date_str):
     """Fetch stories from production for a specific gamer and date"""
     print(f"🔍 Fetching production stories for {gamer_id} from {date_str}...")
-    
-    # Use AWS_PROFILE=prod for production access
-    env = os.environ.copy()
-    env['AWS_PROFILE'] = 'prod'
     
     # Load resources to get production bucket info
     with open('resources.json', 'r') as f:
@@ -33,16 +29,17 @@ def get_production_stories(gamer_id, date_str):
     print(f"   Table: {table_name}")
     print(f"   Region: {region}")
     
-    # Query DynamoDB for this gamer's stories from yesterday
-    # The PK is the parent ID, GSI1PK is the gamer ID
-    dynamodb = boto3.client('dynamodb', region_name=region)
+    # Query DynamoDB for this gamer's stories from today
+    # Use AWS_PROFILE=prod for production access
+    session = boto3.Session(profile_name='prod')
+    dynamodb = session.client('dynamodb', region_name=region)
     
     # Format gamer ID for query
     gsi1pk = gamer_id if gamer_id.startswith('G#') else f'G#{gamer_id}'
     
     try:
         # Query using GSI1 (gamer index)
-        # GSI1SK format is V#{timestamp}
+        # Production GSI1SK format for VideoStory is V#{timestamp}
         date_start = f"V#{date_str}T00:00:00.000Z"
         date_end = f"V#{date_str}T23:59:59.999Z"
         
@@ -79,6 +76,15 @@ def get_production_stories(gamer_id, date_str):
             
             # Only include video stories
             if story.get('type') == 'VideoStory':
+                # Normalize to common format
+                story['_normalized'] = True
+                story['_timestamp'] = story.get('timestamp', '')
+                story['_video_url'] = story.get('video_url', '')
+                story['_thumbnail_url'] = story.get('thumbnail_url', '')
+                story['_gamer'] = gsi1pk
+                story['_stage'] = 'prod'
+                story['_session_start'] = story.get('session_start', '')
+                story['_session_end'] = story.get('session_end', '')
                 stories.append(story)
         
         print(f"✅ Found {len(stories)} video stories")
@@ -86,37 +92,75 @@ def get_production_stories(gamer_id, date_str):
         
     except Exception as e:
         print(f"❌ Error querying DynamoDB: {e}")
+        import traceback
+        traceback.print_exc()
         return []
 
 
 def group_into_sessions(stories):
-    """Group stories into sessions based on session_start/session_end or time proximity"""
+    """Group stories into sessions based on start/end times or time proximity"""
     from collections import defaultdict
+    from datetime import datetime, timedelta
     
     # Group by session
     sessions = defaultdict(list)
     
     for story in stories:
-        session_start = story.get('session_start', '')
-        session_end = story.get('session_end', '')
+        session_start = story.get('_session_start', story.get('start', ''))
+        session_end = story.get('_session_end', story.get('end', ''))
         
         if session_start and session_end:
             session_key = (session_start, session_end)
         else:
             # Use timestamp as session key
-            timestamp = story.get('timestamp', '')
+            timestamp = story.get('_timestamp', story.get('start', ''))
             session_key = (timestamp, timestamp)
         
         sessions[session_key].append(story)
     
-    return sessions
+    # Merge sessions that overlap or are within 10 minutes
+    merged = []
+    for session_key, session_stories in sessions.items():
+        # Sort stories by timestamp
+        session_stories.sort(key=lambda s: s.get('_timestamp', s.get('start', '')))
+        
+        # Find or create merged session
+        added = False
+        for merged_session in merged:
+            merged_start = merged_session['start']
+            merged_end = merged_session['end']
+            
+            # Check if this session overlaps or is close
+            start_dt = datetime.fromisoformat(session_key[0].replace('Z', '+00:00'))
+            end_dt = datetime.fromisoformat(session_key[1].replace('Z', '+00:00'))
+            merged_start_dt = datetime.fromisoformat(merged_start.replace('Z', '+00:00'))
+            merged_end_dt = datetime.fromisoformat(merged_end.replace('Z', '+00:00'))
+            
+            # Within 10 minutes or overlapping
+            if (abs((start_dt - merged_end_dt).total_seconds()) <= 600 or
+                abs((end_dt - merged_start_dt).total_seconds()) <= 600 or
+                (start_dt <= merged_end_dt and end_dt >= merged_start_dt)):
+                merged_session['stories'].extend(session_stories)
+                merged_session['start'] = min(merged_start, session_key[0])
+                merged_session['end'] = max(merged_end, session_key[1])
+                added = True
+                break
+        
+        if not added:
+            merged.append({
+                'start': session_key[0],
+                'end': session_key[1],
+                'stories': session_stories
+            })
+    
+    return merged
 
 
 def format_story_for_demo(story, demo_id):
     """Format a production story for demo_stories.json"""
     # Extract key fields
-    gamer = story.get('GSI1PK', story.get('_gamer_extracted', ''))
-    timestamp = story.get('timestamp', '')
+    gamer = story.get('_gamer', story.get('GSI1PK', ''))
+    timestamp = story.get('_timestamp', story.get('start', ''))
     
     # Create story ID
     gamer_formatted = gamer.replace('G#', 'G_')
@@ -133,14 +177,14 @@ def format_story_for_demo(story, demo_id):
         'description': story.get('description', ''),
         'group': story.get('group', ''),
         'participants': story.get('participants', []) if isinstance(story.get('participants'), list) else [gamer],
-        'gameserver': story.get('gameserver_id', ''),
-        'game_start': story.get('game_start', ''),
-        'game_end': story.get('game_end', '')
+        'gameserver': story.get('gameserver_id', story.get('gameserver', '')),
+        'game_start': story.get('_session_start', story.get('start', '')),
+        'game_end': story.get('_session_end', story.get('end', ''))
     }
 
 
 def download_story_assets(story, demo_id, demo_dir='demo-assets'):
-    """Download video and thumbnail for a story"""
+    """Download thumbnail for a story (skip videos)"""
     print(f"\n📥 Downloading assets for {demo_id}...")
     
     # Load resources
@@ -155,21 +199,8 @@ def download_story_assets(story, demo_id, demo_dir='demo-assets'):
     session = boto3.Session(profile_name='prod')
     s3 = session.client('s3', region_name=region)
     
-    # Download video
-    video_key = story.get('video_url', '')
-    video_local = os.path.join(demo_dir, f"{demo_id}.mp4")
-    
-    if video_key:
-        try:
-            print(f"   📹 Downloading video from s3://{bucket}/{video_key}")
-            s3.download_file(bucket, video_key, video_local)
-            print(f"   ✅ Video saved: {demo_id}.mp4")
-        except Exception as e:
-            print(f"   ❌ Failed to download video: {e}")
-            return False
-    
-    # Download or generate thumbnail
-    thumbnail_key = story.get('thumbnail_url', '')
+    # Download thumbnail only
+    thumbnail_key = story.get('_thumbnail_url', story.get('thumbnail_url', ''))
     thumbnail_local = os.path.join(demo_dir, f"{demo_id}.jpg")
     
     if thumbnail_key:
@@ -179,34 +210,11 @@ def download_story_assets(story, demo_id, demo_dir='demo-assets'):
             print(f"   ✅ Thumbnail saved: {demo_id}.jpg")
             return True
         except Exception as e:
-            print(f"   ⚠️  Failed to download thumbnail: {e}")
-    
-    # Generate thumbnail from video
-    if os.path.exists(video_local):
-        print(f"   🔧 Generating thumbnail from video...")
-        try:
-            cmd = [
-                'ffmpeg',
-                '-i', video_local,
-                '-vframes', '1',
-                '-vf', 'scale=600:400:force_original_aspect_ratio=increase,crop=600:400',
-                '-q:v', '2',
-                '-f', 'image2',
-                '-y',
-                thumbnail_local
-            ]
-            result = subprocess.run(cmd, capture_output=True, text=True)
-            if result.returncode == 0:
-                print(f"   ✅ Thumbnail generated: {demo_id}.jpg")
-                return True
-            else:
-                print(f"   ❌ Failed to generate thumbnail")
-                return False
-        except Exception as e:
-            print(f"   ❌ Error generating thumbnail: {e}")
+            print(f"   ❌ Failed to download thumbnail: {e}")
             return False
-    
-    return False
+    else:
+        print(f"   ⚠️  No thumbnail URL found")
+        return False
 
 
 def main():
@@ -215,14 +223,15 @@ def main():
     
     # Configuration
     gamer_id = "G#45831fea-23d9-4bba-8638-df82680f97cc"
-    yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    # Use Nov 24, 2025 (when the videos were recorded)
+    target_date = "2025-11-24"
     
     print(f"\n📋 Configuration:")
     print(f"   Gamer: {gamer_id}")
-    print(f"   Date: {yesterday}")
+    print(f"   Date: {target_date} (UTC)")
     
     # Fetch production stories
-    stories = get_production_stories(gamer_id, yesterday)
+    stories = get_production_stories(gamer_id, target_date)
     
     if not stories:
         print("\n❌ No stories found!")
@@ -232,10 +241,10 @@ def main():
     sessions = group_into_sessions(stories)
     print(f"\n📊 Found {len(sessions)} session(s)")
     
-    for i, (session_key, session_stories) in enumerate(sessions.items(), 1):
-        print(f"\n   Session {i}: {len(session_stories)} stories")
-        print(f"      Start: {session_key[0]}")
-        print(f"      End: {session_key[1]}")
+    for i, session in enumerate(sessions, 1):
+        print(f"\n   Session {i}: {len(session['stories'])} stories")
+        print(f"      Start: {session['start']}")
+        print(f"      End: {session['end']}")
     
     # Load current demo stories
     print(f"\n📖 Loading current demo_stories.json...")
@@ -255,12 +264,16 @@ def main():
     new_stories = []
     demo_num = next_num
     
-    for story in stories:
+    all_session_stories = []
+    for session in sessions:
+        all_session_stories.extend(session['stories'])
+    
+    for story in all_session_stories:
         demo_id = f"demostory{demo_num:03d}"
         demo_story = format_story_for_demo(story, demo_id)
-        new_stories.append(demo_story)
+        new_stories.append((demo_story, story))
         demo_stories.append(demo_story)
-        print(f"   Added: {demo_id}")
+        print(f"   Added: {demo_id} - {demo_story['timestamp']}")
         demo_num += 1
     
     # Save updated demo_stories.json
@@ -276,8 +289,8 @@ def main():
     Path('demo-assets').mkdir(exist_ok=True)
     
     success_count = 0
-    for story, demo_story in zip(stories, new_stories):
-        if download_story_assets(story, demo_story['demo_id']):
+    for demo_story, original_story in new_stories:
+        if download_story_assets(original_story, demo_story['demo_id']):
             success_count += 1
     
     print(f"\n{'=' * 70}")
@@ -292,4 +305,3 @@ def main():
 
 if __name__ == '__main__':
     exit(main())
-
